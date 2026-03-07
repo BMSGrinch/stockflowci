@@ -1,3 +1,110 @@
+# StockFlow CI
+
+> Prototype de gestionnaire de stock pour PME ivoiriennes
+
+StockFlow CI est une application web de gestion de stock permettant aux entreprises de piloter leurs flux commerciaux — ventes, stock, fournisseurs — visualiser en temps réel les indicateurs clés de son activité à travers un tableau de bord interactif.
+
+---
+
+## Fonctionnalités
+
+- **Gestion des produits** — catalogue complet avec référence, catégorie, prix d'achat/vente, seuil d'alerte de stock et statut actif/inactif
+- **Interface de caisse** — création de ventes avec sélection dynamique des produits, calcul automatique du total et choix du moyen de paiement (espèces, mobile money, carte)
+- **Journal des ventes** — historique complet avec filtre par moyen de paiement
+- **Mouvements de stock** — log immuable de toutes les opérations (entrée, vente, ajustement, perte)
+- **Gestion des fournisseurs** — annuaire avec liste des produits associés
+- **Tableau de bord** — stats en temps réel (produits actifs, alertes stock, ventes du jour, CA du mois) + graphiques Chart.js (ventes des 7 derniers jours, répartition par moyen de paiement)
+- **Authentification** — système sécurisé via Laravel Breeze avec gestion des sessions
+
+---
+
+## Stack technique
+
+| Couche | Technologie |
+|--------|-------------|
+| Backend | Laravel 12 |
+| Frontend | Blade + Tailwind CSS |
+| Graphiques | Chart.js |
+| Base de données | MySQL |
+| Auth | Laravel Breeze |
+
+---
+
+## Choix techniques
+
+**Eager Loading** — Toutes les relations sont chargées en amont avec `with()` et `load()` pour éviter les requêtes SQL en cascade sur les listes paginées.
+
+**Transactions DB** — La création d'une vente est encapsulée dans une transaction `DB::transaction()` : si une étape échoue (stock insuffisant, montant incohérent), toutes les opérations sont annulées pour garantir la cohérence des données.
+
+**Mouvements de stock immuables** — Les mouvements de stock ne peuvent pas être modifiés ou supprimés. Toute correction passe par un nouveau mouvement de type `adjustment`, comme dans un vrai journal comptable.
+
+**Seeders** — La base de données peut être entièrement reconstruite avec des données réalistes en une seule commande `php artisan migrate:fresh --seed`.(J'avais la flemme d'écrire des données réelles 🤣)
+
+---
+
+## Installation locale
+
+```bash
+# 1. Cloner le projet
+git clone https://github.com/ton-username/stockflow-ci.git
+cd stockflow-ci
+
+# 2. Installer les dépendances
+composer install
+npm install
+
+# 3. Configurer l'environnement
+cp .env.example .env
+php artisan key:generate
+
+# 4. Configurer la base de données dans .env
+DB_DATABASE=stackflowci
+DB_USERNAME=root
+DB_PASSWORD=
+
+# 5. Créer la base de données et la remplir
+php artisan migrate:fresh --seed
+
+# 6. Lancer le serveur
+php artisan serve
+npm run dev
+```
+
+Accéder à l'app sur `http://localhost:8000`
+
+**Comptes de test :**
+
+| Rôle | Email | Mot de passe |
+|------|-------|--------------|
+| Admin | admin@stockflow.ci | password123 |
+| Manager | manager@stockflow.ci | password123 |
+| Seller | seller@stockflow.ci | password123 |
+
+---
+
+## Fonctionnalités prévues en V2
+
+- Export PDF des bons de vente
+- Gestion des rôles avec middleware custom (admin / manager / seller)
+- Graphiques avancés (tendances, panier moyen)
+- Mode sombre complet
+
+---
+
+## Auteur
+
+Développé par **Kash** — [GitHub](https://github.com/BMSGrinch)
+
+> *Construit avec Laravel & Tailwind CSS*
+
+## Retour et avis 
+
+N'hésitez pas à me faire un retour en me contactant par mail julienouattara225@gmail.com pour avoir plus d'informations sur mon travail.
+BMSVIE
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
