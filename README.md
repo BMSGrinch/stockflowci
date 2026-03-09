@@ -82,6 +82,12 @@ Accéder à l'app sur `http://localhost:8000`
 
 ---
 
+## Screenshots
+
+![Dashboard]([screenshots/dashboard.png](https://github.com/BMSGrinch/stockflowci/issues/1#issue-4048271261))
+![Produits]([screenshots/products.png](https://github.com/BMSGrinch/stockflowci/issues/2#issue-4048305930))
+![Interface_caisse]([screenshots/nouvelle_vente](https://github.com/BMSGrinch/stockflowci/issues/3#issue-4048310650))
+
 ## Fonctionnalités prévues en V2
 
 - Export PDF des bons de vente
